@@ -196,6 +196,8 @@ int main() {
         // João Vitor: Sua tarefa é adicionar mais 5 produtos no cardápio.
         // Criar um ARRAY para Bebidas e adicionar 5 bebidas diferentes e seus preços.
         // Exemplo: {"Refrigerante", 5.00, "Bebida"}
+        // Desafio: No struct Produto, criar uma nova variavel chamada "descricao" 
+        // e adicionar uma descrição para cada produto.
     };
     Pedido pedidos[20];
     int qtdPedidos;
