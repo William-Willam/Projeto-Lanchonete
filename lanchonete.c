@@ -29,12 +29,10 @@ void limparBuffer()
         ;
 }
 
-void mostrarBemVindo()
-{
-    system("cls");
-    printf("=========================================================\n");
-    printf("|                 Bem-Vindo ao Cantinho Donald          |\n");
-    printf("|             A seguir informe o seu Pedido             |\n");
+void mostrarBemVindo() {
+    system("cls"); 
+    printf("=======================================================\n");
+    printf("|                    DONALD FOOD                      |\n");
     printf("=======================================================\n\n");
 }
 
@@ -93,9 +91,9 @@ void mostrarCardapio(Produto cardapio[], int tamanho)
         if (strcmp(cardapio[i].categoria, "Bebida") == 0)
             printf("%-3d %-25s R$ %8.2f\n", i + 1, cardapio[i].nome, cardapio[i].preco);
     printf("\n");
-
-    printf("---------------------- KIDS ------------------------\n");
-    printf("%-3s %-25s %10s\n", "Id", "Produto", "Preco");
+    
+    printf("---------------------- Kids ------------------------\n");
+    printf("%-3s %-25s %10s\n", "Id", "Produto", "Preço");
     for (int i = 0; i < tamanho; i++)
         if (strcmp(cardapio[i].categoria, "Kids") == 0)
             printf("%-3d %-25s R$ %8.2f\n", i + 1, cardapio[i].nome, cardapio[i].preco);
@@ -114,29 +112,25 @@ float realizarPedido(Produto cardapio[], int tamanho, Pedido pedidos[], int *qtd
     {
         system("cls");
         mostrarCardapio(cardapio, tamanho);
-        printf("Escolha o numero do produto (0 para finalizar): ");
-        if (scanf("%d", &opcao) != 1)
-        {
-            printf("Entrada invalida!\n");
+        printf("Escolha o número do produto (0 para finalizar): ");
+        if (scanf("%d", &opcao) != 1) {
+            printf("Entrada inválida!\n");
             limparBuffer();
             continue;
         }
         limparBuffer();
 
-        if (opcao == 0)
-            break;
-        if (opcao < 1 || opcao > tamanho)
-        {
-            printf("Opcao invalida!\n");
+        if (opcao == 0) break;
+        if (opcao < 1 || opcao > tamanho) {
+            printf("Opção inválida!\n");
             printf("Pressione ENTER para continuar...");
             getchar();
             continue;
         }
 
         printf("Quantidade: ");
-        if (scanf("%d", &qtd) != 1 || qtd <= 0)
-        {
-            printf("Quantidade invalida!\n");
+        if (scanf("%d", &qtd) != 1 || qtd <= 0) {
+            printf("Quantidade inválida!\n");
             limparBuffer();
             printf("Pressione ENTER para continuar...");
             getchar();
@@ -162,30 +156,29 @@ void pagamento(float total)
 {
     int opcao;
     printf("\nTotal a pagar: R$ %.2f\n", total);
-    printf("Escolha a forma de pagamento:\n1 - Pix\n2 - Cartao\nOpçao: ");
-    if (scanf("%d", &opcao) != 1)
-    {
-        printf("Opcao invalida! Pagamento nao realizado.\n");
+    printf("Escolha a forma de pagamento:\n1 - Pix\n2 - Cartão\nOpção: ");
+    if (scanf("%d", &opcao) != 1) {
+        printf("Opção inválida! Pagamento não realizado.\n");
         exit(1);
     }
     limparBuffer();
     if (opcao == 1)
     {
         printf("Mostrando QR Code do Pix...\nPagamento realizado!\n");
-    }
-    else if (opcao == 2)
-    {
-        printf("Insira o cartao...\nPagamento aprovado!\n");
-    }
-    else
-    {
-        printf("Opcao invalida! Pagamento nao realizado.\n");
+    } else if (opcao == 2) {
+        printf("Insira o cartão...\nPagamento aprovado!\n");
+    } else {
+        printf("Opção inválida! Pagamento não realizado.\n");
         exit(1);
     }
 }
 
-void gerarNotaFiscal(Pedido pedidos[], int qtdPedidos, float total)
-{
+// Luis Eduardo: Sua tarefa é melhorar o codigo abaixo.
+// O Objetivo é colocar o nome do cliente, CPF e telefone na nota fiscal.
+// Também colocar o nome da lanchonete no topo da nota fiscal.
+// Exibir na nota a forma de pagamento(pix, cartão ou dinheiro) escolhida pelo cliente.
+// E Deixar a nota fiscal mais bonita, com bordas e espaçamento adequado.(Se não for trabalhoso!)
+void gerarNotaFiscal(Pedido pedidos[], int qtdPedidos, float total) {
     FILE *arquivo = fopen("nota_fiscal.txt", "w");
     if (!arquivo)
     {
@@ -193,11 +186,17 @@ void gerarNotaFiscal(Pedido pedidos[], int qtdPedidos, float total)
         return;
     }
     fprintf(arquivo, "==== NOTA FISCAL ====\n");
-    for (int i = 0; i < qtdPedidos; i++)
-    {
+    for (int i = 0; i < qtdPedidos; i++) {
         fprintf(arquivo, "%s x%d - R$ %.2f\n", pedidos[i].produto.nome, pedidos[i].quantidade, pedidos[i].produto.preco * pedidos[i].quantidade);
     }
-    fprintf(arquivo, "Total: R$ %.2f\n", total);
+
+    fprintf(arquivo, "+---------------------------------------------------------------+\n");
+
+    // Forma de pagamento e total
+    fprintf(arquivo, "| Forma de Pagamento: %-41s |\n", formaPagamento);
+    fprintf(arquivo, "| TOTAL A PAGAR:                                   R$ %9.2f |\n", total);
+    fprintf(arquivo, "+===============================================================+\n");
+
     fclose(arquivo);
     printf("Nota fiscal gerada: nota_fiscal.txt\n");
 }
@@ -228,14 +227,19 @@ int main()
 
         // Kids
         {"Mini Burger", 12.00, "Kids"},
-        {"Nuggets Kids", 13.00, "Kids"},
-       
+        {"Nuggets Kids", 13.00, "Kids"}
 
+        // João Vitor: Sua tarefa é adicionar mais 5 produtos no cardápio.
+        // Criar um ARRAY para Bebidas e adicionar 5 bebidas diferentes e seus preços.
+        // Exemplo: {"Refrigerante", 5.00, "Bebida"}
+        // Desafio: No struct Produto, criar uma nova variavel chamada "descricao" 
+        // e adicionar uma descrição para cada produto.
     };
     Pedido pedidos[20];
     int qtdPedidos;
     float total;
     Cliente cliente;
+    char formaPagamento[20];
 
     mostrarBemVindo();
     dadosDoCliente(&cliente);
@@ -245,8 +249,28 @@ int main()
         printf("Nenhum pedido realizado.\n");
         return 0;
     }
-    pagamento(total);
-    gerarNotaFiscal(pedidos, qtdPedidos, total);
+
+    // Aqui foi necessário capturar a forma de pagamento para passar para a nota fiscal
+    printf("\nTotal a pagar: R$ %.2f\n", total);
+    printf("Escolha a forma de pagamento:\n1 - Pix\n2 - Cartao\nOpção: ");
+    int opcaoPagamento;
+    if (scanf("%d", &opcaoPagamento) != 1)
+    {
+        printf("Opcao invalida! Pagamento nao realizado.\n");
+        exit(1);
+    }
+    limparBuffer();
+    if (opcaoPagamento == 1)
+        strcpy(formaPagamento, "Pix");
+    else if (opcaoPagamento == 2)
+        strcpy(formaPagamento, "Cartao");
+    else
+    {
+        printf("Opcao invalida! Pagamento nao realizado.\n");
+        exit(1);
+    }
+
+    gerarNotaFiscal(pedidos, qtdPedidos, total, cliente, formaPagamento);
 
     return 0;
 }
