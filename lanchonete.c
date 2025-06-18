@@ -164,7 +164,7 @@ void pagamento(float total) {
 // Luis Eduardo: Sua tarefa é melhorar o codigo abaixo.
 // O Objetivo é colocar o nome do cliente, CPF e telefone na nota fiscal.
 // Também colocar o nome da lanchonete no topo da nota fiscal.
-// Exibir na nota a forma de pagamento escolhida pelo cliente.
+// Exibir na nota a forma de pagamento(pix, cartão ou dinheiro) escolhida pelo cliente.
 // E Deixar a nota fiscal mais bonita, com bordas e espaçamento adequado.(Se não for trabalhoso!)
 void gerarNotaFiscal(Pedido pedidos[], int qtdPedidos, float total) {
     FILE *arquivo = fopen("nota_fiscal.txt", "w");
