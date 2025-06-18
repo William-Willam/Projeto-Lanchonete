@@ -31,6 +31,7 @@ void mostrarBemVindo() {
     printf("=======================================================\n\n");
 }
 
+// Funcao para coletar dados do cliente
 void dadosDoCliente(Cliente *cliente){
     printf("Digite seu nome: ");
     fgets(cliente->nome, sizeof(cliente->nome), stdin);
@@ -50,6 +51,7 @@ void dadosDoCliente(Cliente *cliente){
     system("cls"); 
 }
 
+// Funcao para mostrar o cardapio
 void mostrarCardapio(Produto cardapio[], int tamanho) {
     printf("====================================================\n");
     printf("                    CARDÁPIO                        \n");
@@ -92,6 +94,7 @@ void mostrarCardapio(Produto cardapio[], int tamanho) {
     printf("\n====================================================\n");
 }
 
+// Funcao para realizar o pedido
 float realizarPedido(Produto cardapio[], int tamanho, Pedido pedidos[], int *qtdPedidos) {
     int opcao, qtd;
     float total = 0;
@@ -138,6 +141,7 @@ float realizarPedido(Produto cardapio[], int tamanho, Pedido pedidos[], int *qtd
     return total;
 }
 
+// Funcao para pagamento
 void pagamento(float total) {
     int opcao;
     printf("\nTotal a pagar: R$ %.2f\n", total);
@@ -177,6 +181,7 @@ void gerarNotaFiscal(Pedido pedidos[], int qtdPedidos, float total) {
     printf("Nota fiscal gerada: nota_fiscal.txt\n");
 }
 
+// metodo principal
 int main() {
     Produto cardapio[] = {
         // Trios
